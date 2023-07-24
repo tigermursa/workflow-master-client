@@ -8,6 +8,9 @@ import Layout from "./Components/Layout/Layout.jsx";
 import ForOfor from "./Components/ForOfor/ForOfor.jsx";
 import About from "./Components/About/About.jsx";
 import Home from "./Components/Home/Home.jsx";
+import AuthProvider from "./Components/Provider/AuthProvider.jsx";
+import LogIn from "./Components/Login/Login.jsx";
+import SignUp from "./Components/SignUp/SignUp.jsx";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +29,14 @@ const router = createBrowserRouter([
         path: "/about",
         element: <About />,
       },
+      {
+        path: "/login",
+        element: <LogIn />,
+      },
+      {
+        path: "/signup",
+        element: <SignUp />,
+      },
     ],
   },
   {
@@ -36,6 +47,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );
