@@ -7,12 +7,17 @@ import EmployeeAttendanceSheet from "./Components/EmployeeAttendanceSheet/Employ
 import Layout from "./Components/Layout/Layout.jsx";
 import ForOfor from "./Components/ForOfor/ForOfor.jsx";
 import About from "./Components/About/About.jsx";
+import Home from "./Components/Home/Home.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
     children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
       {
         path: "/attendance",
         element: <EmployeeAttendanceSheet />,

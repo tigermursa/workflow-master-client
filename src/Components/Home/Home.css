@@ -1,0 +1,54 @@
+.home-background {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(8, 13, 33, 0.6)),
+    url("/public/officebanner.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+}
+
+/* effects */
+
+
+.home-container {
+  position: relative;
+}
+
+.home-background {
+  /* Your existing styles for the background */
+  background-color: #121212;
+  /* Other styles as needed */
+}
+
+/* Firefly pseudo-element */
+.home-background::before {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.7);
+  pointer-events: none;
+  animation: fireflyAnimation 35s infinite ease-in-out;
+}
+
+/* Position and animate the firefly */
+@keyframes fireflyAnimation {
+  0%, 100% {
+    transform: scale();
+    opacity: 1;
+    top: 50%;
+    left: 25%;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.5;
+    top: 15%;
+    left: 75%;
+  }
+}

@@ -24,15 +24,15 @@ const NavigationBar = () => {
   };
 
   return (
-    <div className="bg-gray-900 text-white">
+    <div className=" text-white  absolute w-full">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         <div>
-          <span className="text-xl font-bold">WorlFlow-Master</span>
+          <span className="text-2xl font-bold">WorlFlow-Master</span>
         </div>
         <div className="hidden md:flex space-x-6">
           {/* Use NavLink instead of "a" tags for active class handling */}
           <NavLink
-            to="/home"
+            to="/"
             className="hover:text-gray-300"
             activeClassName="text-green-500"
           >
@@ -104,9 +104,12 @@ const NavigationBar = () => {
         </div>
       </div>
       {/* Navigation items for mobile */}
-      <animated.div style={navItemsAnimation} className="md:hidden px-4 pb-4">
+      <animated.div
+        style={navItemsAnimation}
+        className="md:hidden px-4 pb-4 bg-gray-950 bg-opacity-95 "
+      >
         <NavLink
-          to="/home"
+          to="/"
           className="block py-2 text-gray-300 hover:text-white"
           activeClassName="text-green-500"
         >
@@ -142,7 +145,7 @@ const NavigationBar = () => {
         </NavLink>
       </animated.div>
       {/* Conditional rendering of login/logout button */}
-      <div className="container mx-auto px-4 py-3 flex justify-end items-center hidden">
+      <div className="container mx-auto px-4 py-3 flex justify-end items-center hidden ">
         {isUserLoggedIn ? (
           <button
             onClick={handleLogout}

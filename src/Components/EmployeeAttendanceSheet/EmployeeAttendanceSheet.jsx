@@ -82,7 +82,7 @@ const EmployeeAttendanceSheet = () => {
 
   return (
     <div className="office-background pb-56">
-      <div className="w-full md:h-full  lg:w-1/2 mx-auto mt-5 shadow-2xl shadow-black p-5 pb-20 pt-6  ">
+      <div className="w-full md:h-full  lg:w-1/2 mx-auto shadow-2xl shadow-black p-5 pb-20 pt-6 mt-20  ">
         <div className="px-4 py-8 sm:px-6 md:px-8">
           {/* clock ui here */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
