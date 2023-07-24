@@ -1,5 +1,6 @@
 import React from "react";
 import "./Home.css";
+import { NavLink } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -11,9 +12,12 @@ const Home = () => {
         <h2 className="text-xl text-white font-semibold">
           Manage Your Employee
         </h2>
-        <button className="px-6 py-3 btn btn-outline text-white rounded-md shadow-lg mt-5">
+        <NavLink
+          to={"/login"}
+          className="px-6 py-3 btn btn-outline text-white rounded-md shadow-lg mt-5"
+        >
           Login
-        </button>
+        </NavLink>
       </div>
     </div>
   );

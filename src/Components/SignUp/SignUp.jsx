@@ -147,7 +147,7 @@ const SignUp = () => {
                   type="text"
                   name="username"
                   required
-                  placeholder="Username"
+                  placeholder="UserID"
                   {...register("username", { required: true })}
                 />
                 {errors.username && (
@@ -169,7 +169,7 @@ const SignUp = () => {
                   type="text"
                   name="email"
                   required
-                  placeholder="Email or Phone"
+                  placeholder="Email"
                   {...register("email", { required: true })}
                 />
                 {errors.email && (
@@ -208,8 +208,21 @@ const SignUp = () => {
                   type="text"
                   name="address"
                   required
-                  placeholder="Address"
+                  placeholder="Full Address"
                   {...register("address", { required: true })}
+                />
+                {errors.address && (
+                  <span className="text-red-600">Address is required</span>
+                )}
+              </div>
+              <div className="field rounded-full  mt-4">
+                <span className="fa fa-user"></span>
+                <input
+                  type="text"
+                  name="position"
+                  required
+                  placeholder="Position"
+                  {...register("position", { required: true })}
                 />
                 {errors.address && (
                   <span className="text-red-600">Address is required</span>
@@ -254,24 +267,16 @@ const SignUp = () => {
               <div className="pass text-white hidden">
                 <p>Forgot Password?</p>
               </div>
-              <button className="field mt-5 rounded-full">
-                <input className="rounded-full" type="submit" value="SIGN UP" />
+              <button className="field mt-5 bg-black rounded-full">
+                <input
+                  className="rounded-full"
+                  type="submit"
+                  value="SIGN UP NEW EMPLOYEE"
+                />
               </button>
             </form>
-            <div className="login">Or login with</div>
-            <div className="links">
-              <button
-                onClick={handleGoogleSignIn}
-                className="google rounded-full"
-              >
-                <FaGoogle className="me-1 "></FaGoogle>
-                <span>Google</span>
-              </button>
-            </div>
-            <div className="signup">
-              Already have an account ? <Link to="/login">Sign in </Link>
-            </div>
-            <div className="signup">
+
+            <div className="signup mt-4">
               <Link to="/">Go to Home</Link>
             </div>
           </div>
