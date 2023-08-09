@@ -1,0 +1,31 @@
+.drawer-transition {
+  transition: transform 0.9s ease-in-out;
+}
+
+.drawer-transition-enter {
+  transform: translateX(-100%);
+}
+
+.drawer-transition-enter-active {
+  transform: translateX(0);
+}
+
+.drawer-transition-exit {
+  transform: translateX(0);
+}
+
+.drawer-transition-exit-active {
+  transform: translateX(-100%);
+}
+
+.background {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("/public/drawer-bg.jpg");
+  background-size: cover;
+  background-position: left;
+  background-repeat: no-repeat;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+}

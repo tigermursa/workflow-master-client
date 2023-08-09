@@ -14,15 +14,12 @@
 
 /* effects */
 
-
 .home-container {
   position: relative;
 }
 
 .home-background {
-  /* Your existing styles for the background */
   background-color: #121212;
-  /* Other styles as needed */
 }
 
 /* Firefly pseudo-element */
@@ -39,7 +36,8 @@
 
 /* Position and animate the firefly */
 @keyframes fireflyAnimation {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale();
     opacity: 1;
     top: 50%;
@@ -50,5 +48,12 @@
     opacity: 0.5;
     top: 15%;
     left: 75%;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .home-background {
+    background-position: left;
   }
 }
