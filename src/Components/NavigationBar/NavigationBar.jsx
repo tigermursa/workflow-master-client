@@ -314,31 +314,31 @@ const NavigationBar = () => {
         <div>
           <NavLink
             to="/"
-            className="text-white font-semibold me-4 text-xl hidden md:block"
+            className="text-white hover:text-gray-400 font-semibold me-4 text-xl hidden md:block"
           >
             Home
           </NavLink>
           <NavLink
             to="/attendance"
-            className="text-white font-semibold me-4 text-xl hidden md:block"
+            className="text-white hover:text-gray-400  font-semibold me-4 text-xl hidden md:block"
           >
             Attendance
           </NavLink>
           <NavLink
             to="/"
-            className="text-white font-semibold me-4 text-xl hidden md:block"
+            className="text-white hover:text-gray-400  font-semibold me-4 text-xl hidden md:block"
           >
-            Notice Board
+            Notice
           </NavLink>
           <NavLink
-            to="/"
-            className="text-white font-semibold me-4 text-xl hidden md:block"
+            to={"https://to-do-list-d5399.web.app/"}
+            className="text-white hover:text-gray-400  font-semibold me-4 text-xl hidden md:block"
           >
             To Do
           </NavLink>
           <NavLink
             to="/about"
-            className="text-white font-semibold me-4 text-xl hidden md:block"
+            className="text-white hover:text-gray-400  font-semibold me-4 text-xl hidden md:block"
           >
             About
           </NavLink>
@@ -384,16 +384,10 @@ const NavigationBar = () => {
             </label>
             {user ? (
               <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                <li>
-                  <div className="justify-between">
-                    <NavLink to="/profile">Profile</NavLink>
-                    <span className="badge">New</span>
-                  </div>
+                <li className="bg-white">
+                  <NavLink to="/profile">Profile</NavLink>
                 </li>
-                <li>
-                  <div>Settings</div>
-                </li>
-                <li>
+                <li className="bg-white">
                   <NavLink onClick={signOutHandler}>Logout</NavLink>
                 </li>
               </ul>

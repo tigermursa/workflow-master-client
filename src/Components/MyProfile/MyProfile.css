@@ -1,0 +1,14 @@
+.id-card {
+  height: 400px;
+  width: 400px;
+  margin: 0 auto;
+}
+.attendance-card {
+  padding: 60px;
+}
+
+@media screen and (max-width: 767px) {
+  .attendance-card {
+    padding: 10px;
+  }
+}

@@ -30,7 +30,7 @@
   left: 50%;
   z-index: 999;
   text-align: center;
-  padding: 60px 32px;
+  padding: 22px 32px;
   width: 370px;
   transform: translate(-50%, -50%);
   background: rgba(124, 120, 120, 0.7);
@@ -40,7 +40,6 @@
   color: white;
   font-size: 33px;
   font-weight: 600;
-  margin: 0 0 35px 0;
   font-family: "Montserrat", sans-serif;
 }
 .field {

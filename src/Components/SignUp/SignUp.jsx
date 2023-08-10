@@ -133,7 +133,7 @@ const SignUp = () => {
     <div className="mt-0">
       {loading ? (
         <div className="flex justify-center items-center mt-96 mb-96">
-          <Spinner></Spinner>
+          <span className="loading loading-bars loading-lg"></span>
         </div>
       ) : (
         <div className="bg-img">

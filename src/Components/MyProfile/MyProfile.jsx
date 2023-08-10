@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import EmployeeAttendanceSheet from "../EmployeeAttendanceSheet/EmployeeAttendanceSheet";
-
+import MyAttendance from "../MyAttendance/MyAttendance";
+import "./MyProfile.css";
 const MyProfile = () => {
   const { user } = useContext(AuthContext);
   const [userData, setUserData] = useState([]);
@@ -17,13 +18,13 @@ const MyProfile = () => {
   }, [user]);
 
   return (
-    <div className="pt-10 office-background">
+    <div className="pt-20 h-full office-background">
       {userData.length > 0 ? (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="flex flex-col  w-full justify-around  h-full">
           {userData.map((user) => (
             <div
               key={user._id}
-              className="bg-white bg-opacity-20 rounded-lg shadow-2xl p-6"
+              className="bg-white bg-opacity-20 rounded-lg shadow-2xl p-6  id-card"
             >
               <img
                 className="mx-auto h-40 w-40 rounded-2xl"
@@ -51,9 +52,12 @@ const MyProfile = () => {
               </div>
             </div>
           ))}
+          <div className=" attendance-card">
+            <MyAttendance />
+          </div>
         </div>
       ) : (
-        <p>Loading...</p>
+        <span className="loading loading-bars loading-lg text-white"></span>
       )}
     </div>
   );

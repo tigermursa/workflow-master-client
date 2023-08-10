@@ -12,6 +12,8 @@ import AuthProvider from "./Components/Provider/AuthProvider.jsx";
 import LogIn from "./Components/Login/Login.jsx";
 import SignUp from "./Components/SignUp/SignUp.jsx";
 import MyProfile from "./Components/MyProfile/MyProfile.jsx";
+import MyAttendance from "./Components/MyAttendance/MyAttendance.jsx";
+import Dashboard from "./Components/DashBoard/Dashboard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +43,14 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <MyProfile />,
+      },
+      {
+        path: "/myattendance",
+        element: <MyAttendance />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
       },
     ],
   },

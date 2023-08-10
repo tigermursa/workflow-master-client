@@ -2,13 +2,15 @@ import React, { useState, useEffect, useContext } from "react";
 import moment from "moment";
 import "./EmployeeAttendanceSheet.css";
 import { AuthContext } from "../Provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const EmployeeAttendanceSheet = () => {
   const { user } = useContext(AuthContext);
   const [userData, setUserData] = useState([]);
+  const [attendanceData, setttendance] = useState([]);
+
   useEffect(() => {
     if (user && user.email) {
-      // Fetch user data using the user's email
       fetch(`http://localhost:3000/employee/${user.email}`)
         .then((response) => response.json())
         .then((data) => setUserData(data))
@@ -19,7 +21,7 @@ const EmployeeAttendanceSheet = () => {
   const storedAttendance = JSON.parse(localStorage.getItem("attendance"));
   const [attendance, setAttendance] = useState(
     storedAttendance || Array(31).fill({ status: 4, time: "" })
-  ); // Default value is (Absent)
+  );
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -33,18 +35,52 @@ const EmployeeAttendanceSheet = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("attendance", JSON.stringify(attendance));
-  }, [attendance]);
+    if (user && user.email) {
+      // Fetch user data using the user's email
+      fetch(`http://localhost:3000/attendance/${user.email}`)
+        .then((response) => response.json())
+        .then((data) => setttendance(data))
+        .catch((error) => console.error("Error fetching data:", error));
+    }
+  }, [user, attendance]);
 
   const handleChange = (index, value) => {
     const updatedAttendance = [...attendance];
     const currentTime = new Date();
-    const selectedTime = formatTime(currentTime);
-
+    const formattedDate = formatDate(currentTime);
     updatedAttendance[index] = {
+      email: user.email,
+      date: formattedDate,
+      time: formatTime(currentTime),
       status: value,
-      time: value === 2 ? selectedTime : "",
     };
+
+    fetch("http://localhost:3000/attendance", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedAttendance[index]),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        Swal.fire({
+          icon: "success",
+          title: "Attendance Submitted",
+          text: "Your attendance has been successfully submitted.",
+        }).then(() => {
+          // Reload the page when the user clicks "OK"
+          window.location.reload();
+        });
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "An error occurred while submitting your attendance.",
+        });
+      });
+
     setAttendance(updatedAttendance);
   };
 
@@ -66,38 +102,46 @@ const EmployeeAttendanceSheet = () => {
     return date.toLocaleDateString(undefined, options);
   };
 
-  const month = moment.months()[currentTime.getMonth()]; // Get the current month
-  const totalDays = moment(currentTime).daysInMonth(); // Get the total number of days in the current month
+  const month = moment.months()[currentTime.getMonth()];
+  const totalDays = moment(currentTime).daysInMonth();
 
-  const presentDays = attendance.filter((item) => item.status === 2).length;
-  const absentDays = attendance.filter((item) => item.status === 1).length;
-  const vacationDays = attendance.filter((item) => item.status === 3).length;
+  const presentDays = attendanceData.filter((item) => item.status === 2).length;
+  const absentDays = attendanceData.filter((item) => item.status === 1).length;
 
-  const getStatusBackgroundColor = (status) => {
-    switch (status) {
-      case 2: // Present
-        return "rgba(0, 128, 0, 0.5)"; // Green with 60% opacity
-      case 1: // Absent
-        return "rgba(255, 0, 0, 0.4)"; // Red with 60% opacity
-      case 3: // Vacation
-        return "rgba(255, 165, 0, 0.5)"; // Orange with 60% opacity
-      case 4: // Vacation
-        return "rgba(255, 255, 255, 0.3)"; // White with 60% opacity
-      default:
-        return ""; // White with 60% opacity
-    }
+  const [showAttendanceDialog, setShowAttendanceDialog] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState(2); // Default: Present
+
+  const handleAttendanceButtonClick = () => {
+    setShowAttendanceDialog(true);
   };
 
-  const handleReset = () => {
-    localStorage.removeItem("attendance");
-    setAttendance(Array(31).fill({ status: 4, time: "" }));
+  const handleStatusSelect = (status) => {
+    setSelectedStatus(status);
+  };
+
+  const handleAttendanceSubmit = () => {
+    const index = new Date().getDate() - 1;
+
+    // Check if attendance for the selected date already exists
+    if (attendance[index].status !== 4) {
+      Swal.fire({
+        icon: "info",
+        title: "Attendance Already Taken",
+        text: `Your attendance status for ${attendance[index].date} has already been taken.`,
+      }).then(() => {
+        // Reload the page when the user clicks "OK"
+        window.location.reload();
+      });
+    } else {
+      handleChange(index, selectedStatus);
+      setShowAttendanceDialog(false);
+    }
   };
 
   return (
     <div className="office-background pb-56">
-      <div className="w-full md:h-full  lg:w-1/2 mx-auto shadow-2xl shadow-black p-5 pb-20 pt-6 mt-20  ">
+      <div className="w-full md:h-full lg:w-1/2 mx-auto shadow-2xl shadow-black p-5 pb-20 pt-6 mt-20 bg-white bg-opacity-10 ">
         <div className="px-4 py-8 sm:px-6 md:px-8">
-          {/* clock ui here */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
             <div className="text-white">
               <div className="text-4xl sm:text-6xl font-bold">
@@ -116,114 +160,73 @@ const EmployeeAttendanceSheet = () => {
               ))}
             </div>
           </div>
-          <div className="mt-8">
-            <p className="text-3xl font-bold text-white border-text2 mb-4">
+          <div className="mt-12">
+            <p className="text-3xl font-bold text-white border-text2 mb-4 hidden">
               Running Month {month}
             </p>
             <p className="text-xl sm:text-3xl font-bold text-white border-text2 mb-4">
               Total days: {totalDays}
             </p>
             <div className="text-lg sm:text-xl font-extrabold flex flex-wrap justify-center gap-4 sm:gap-10 text-white border-text2">
-              <p>Vacation: {vacationDays}</p>
               <p>Present: {presentDays}</p>
               <p>Absent: {absentDays}</p>
             </div>
           </div>
         </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))",
-            gridGap: "25px",
-            justifyContent: "center",
-            justifyItems: "center",
-            alignItems: "center",
-          }}
-        >
-          {attendance.map((item, index) => (
-            <div
-              key={index}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: getStatusBackgroundColor(item.status),
-                color: "white",
-                position: "relative",
-                borderRadius: "5px", // Rounded corners
-                fontWeight: "bold", // Bold font
-                height: "70px",
-                width: "130px",
-              }}
-            >
-              {index + 1}
-              <select
-                value={item.status}
-                onChange={(e) => handleChange(index, parseInt(e.target.value))}
-                style={{
-                  position: "absolute",
-                  top: "50%",
-                  right: 0,
-                  transform: "translateY(-50%)",
-                  zIndex: 1,
-                  backgroundColor: "transparent",
-                  color: "transparent",
-                  appearance: "none",
-                  cursor: "pointer",
-                  border: "none",
-                }}
-              >
-                <option
-                  value={3}
-                  style={{ backgroundColor: "orange", color: "black" }}
-                >
-                  Vacation
-                </option>
-                <option
-                  value={1}
-                  style={{ backgroundColor: "red", color: "black" }}
-                >
-                  Absent
-                </option>
-                <option
-                  value={2}
-                  style={{ backgroundColor: "green", color: "black" }}
-                >
-                  Present
-                </option>
-              </select>
-              <span
-                style={{
-                  position: "absolute",
-                  top: "50%",
-                  right: "10px",
-                  transform: "translateY(-50%)",
-                }}
-              >
-                &#9662;
-              </span>
-              {item.status === 2 && (
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: "-15px",
-                    fontSize: "10px",
-                    color: "white",
-                  }}
-                >
-                  {item.time}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+
         <button
           className="btn btn-outline text-white hover:bg-transparent hover:text-gray-500 mt-10"
-          onClick={handleReset}
+          onClick={handleAttendanceButtonClick}
         >
-          Reset Data
+          Put Attendance
         </button>
       </div>
+
+      {showAttendanceDialog && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded shadow-md">
+            <p className="text-lg font-semibold mb-4">
+              Select Attendance Status
+            </p>
+            <div className="flex gap-4">
+              <button
+                className={`btn btn-sm ${
+                  selectedStatus === 2
+                    ? "bg-green-500 text-white"
+                    : "bg-gray-300 hover:bg-green-500"
+                }`}
+                onClick={() => handleStatusSelect(2)}
+              >
+                Present
+              </button>
+              <button
+                className={`btn btn-sm ${
+                  selectedStatus === 1
+                    ? "bg-red-500 text-white"
+                    : "bg-gray-300 hover:bg-red-500"
+                }`}
+                onClick={() => handleStatusSelect(1)}
+              >
+                Absent
+              </button>
+            </div>
+            <div className="flex justify-center mt-10">
+              <button
+                className="btn btn-blue mr-2"
+                onClick={handleAttendanceSubmit}
+              >
+                Submit
+              </button>
+              <button
+                className="btn btn-gray"
+                onClick={() => setShowAttendanceDialog(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
