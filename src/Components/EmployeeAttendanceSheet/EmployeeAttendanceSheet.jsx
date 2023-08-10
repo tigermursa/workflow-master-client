@@ -1,8 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import moment from "moment";
 import "./EmployeeAttendanceSheet.css";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const EmployeeAttendanceSheet = () => {
+  const { user } = useContext(AuthContext);
+  const [userData, setUserData] = useState([]);
+  useEffect(() => {
+    if (user && user.email) {
+      // Fetch user data using the user's email
+      fetch(`http://localhost:3000/employee/${user.email}`)
+        .then((response) => response.json())
+        .then((data) => setUserData(data))
+        .catch((error) => console.error("Error fetching data:", error));
+    }
+  }, [user]);
+
   const storedAttendance = JSON.parse(localStorage.getItem("attendance"));
   const [attendance, setAttendance] = useState(
     storedAttendance || Array(31).fill({ status: 4, time: "" })
@@ -94,9 +107,13 @@ const EmployeeAttendanceSheet = () => {
                 {formatDate(currentTime)}
               </div>
             </div>
-            <div className="mt-6 sm:mt-0 text-white">
-              <p className="text-lg font-bold">Employee Name:</p>
-              <p className="text-lg font-bold">Employee ID:</p>
+            <div className="mt-6 sm:mt-0 text-white text-start">
+              {userData.map((user) => (
+                <div key={user._id}>
+                  <p className="text-lg font-bold">Name : {user.name}</p>
+                  <p className="text-lg font-bold">ID : {user.eID}</p>
+                </div>
+              ))}
             </div>
           </div>
           <div className="mt-8">

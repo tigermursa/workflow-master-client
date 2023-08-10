@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { FaGoogle, FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
-import { GoogleAuthProvider } from "firebase/auth";
 import { storage } from "../firebaseConfig/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Swal from "sweetalert2";
@@ -13,7 +12,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  const { createUser, signInGoogle } = useContext(AuthContext);
+  const { createUser } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState();
   const [userPhoto, setUserPhoto] = useState(null);
@@ -28,7 +27,18 @@ const SignUp = () => {
 
   const onSubmit = async (data) => {
     setLoading(true);
-    const { email, password, confirm, username, gender, phone, address } = data;
+    const {
+      email,
+      password,
+      confirm,
+      username,
+      gender,
+      phone,
+      address,
+      position,
+      employeeID,
+      role,
+    } = data;
     setError("");
 
     if (password.length < 6) {
@@ -56,7 +66,17 @@ const SignUp = () => {
     setLoading(true);
     try {
       const url = await uploadImageToStorage();
-      await createUser(email, password, username, url, gender, phone, address);
+      await createUser(
+        email,
+        password,
+        username,
+        url,
+        gender,
+        phone,
+        address,
+        position,
+        employeeID
+      );
       setLoading(false);
       navigate(from) || "/login";
       setPhotoUrl(null);
@@ -64,8 +84,14 @@ const SignUp = () => {
         name: data.username,
         email: data.email,
         image: url,
+        gender: gender,
+        phoneNumber: phone,
+        fullAddress: address,
+        position: position,
+        eID: employeeID,
+        role: "null",
       };
-      fetch(`https://y-tigermursa.vercel.app/users`, {
+      fetch(`http://localhost:3000/users`, {
         method: "POSt",
         headers: {
           "content-type": "application/json",
@@ -74,7 +100,7 @@ const SignUp = () => {
       });
       Swal.fire({
         title: "Great",
-        text: " User  account  created successfully!",
+        text: " Employee  account  created successfully!",
         icon: "success",
       });
     } catch (error) {
@@ -103,32 +129,6 @@ const SignUp = () => {
     setShowPassword(!showPassword);
   };
 
-  const googleProvider = new GoogleAuthProvider();
-
-  const handleGoogleSignIn = () => {
-    signInGoogle(googleProvider)
-      .then((result) => {
-        const theUser = result.user;
-        console.log(theUser);
-        const saveUser = {
-          name: theUser.displayName,
-          email: theUser.email,
-          image: theUser.photoURL,
-        };
-        fetch(`https://y-tigermursa.vercel.app/users`, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(saveUser),
-        });
-        navigate(from) || "/";
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   return (
     <div className="mt-0">
       {loading ? (
@@ -147,14 +147,14 @@ const SignUp = () => {
                   type="text"
                   name="username"
                   required
-                  placeholder="UserID"
+                  placeholder="Employee name"
                   {...register("username", { required: true })}
                 />
                 {errors.username && (
                   <span className="text-red-600">Username is required</span>
                 )}
               </div>
-              <div className="field mb-4 p-2 rounded-full">
+              <div className="field mb-4 p-1 ps-3 pt-2 rounded-full">
                 <div>
                   <input
                     type="file"
@@ -202,7 +202,7 @@ const SignUp = () => {
                   <span className="text-red-600">Phone Number is required</span>
                 )}
               </div>
-              <div className="field rounded-full  mt-4">
+              <div className="field rounded-full  mt-4 pe-3">
                 <span className="fa fa-user"></span>
                 <input
                   type="text"
@@ -225,7 +225,20 @@ const SignUp = () => {
                   {...register("position", { required: true })}
                 />
                 {errors.address && (
-                  <span className="text-red-600">Address is required</span>
+                  <span className="text-red-600">Position is required</span>
+                )}
+              </div>
+              <div className="field rounded-full  mt-4">
+                <span className="fa fa-user"></span>
+                <input
+                  type="text"
+                  name=" employeeID"
+                  required
+                  placeholder=" employee unique ID"
+                  {...register("employeeID", { required: true })}
+                />
+                {errors.address && (
+                  <span className="text-red-600">id is required</span>
                 )}
               </div>
               <div className="field space rounded-full">
