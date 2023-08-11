@@ -2,19 +2,31 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import LazyLoad from "react-lazyload";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import { NavLink } from "react-router-dom";
+import EmployeeDetailsModal from "./EmployeeDetailsModal";
 
 const AllEmployees = () => {
   const [employees, setEmployees] = useState([]);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    // Fetch employee data when the component mounts
     axios
       .get("http://localhost:3000/users")
       .then((response) => setEmployees(response.data))
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  // Process employee positions to create data for the pie chart
+  const openModal = (employee) => {
+    setSelectedEmployee(employee);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedEmployee(null);
+    setIsModalOpen(false);
+  };
+
   const getPositionData = () => {
     const positions = {};
     employees.forEach((employee) => {
@@ -59,7 +71,12 @@ const AllEmployees = () => {
                 <td>{employee.name}</td>
                 <td>{employee.position}</td>
                 <td>
-                  <button className="btn btn-ghost btn-xs">details</button>
+                  <button
+                    className="btn btn-outline btn-xs"
+                    onClick={() => openModal(employee)}
+                  >
+                    details
+                  </button>
                 </td>
               </tr>
             ))}
@@ -88,6 +105,11 @@ const AllEmployees = () => {
           <Legend />
         </PieChart>
       </div>
+      <EmployeeDetailsModal
+        employee={selectedEmployee}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      />
     </div>
   );
 };

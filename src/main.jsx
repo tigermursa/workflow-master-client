@@ -17,6 +17,7 @@ import Dashboard from "./Components/DashBoard/Dashboard.jsx";
 import AllEmployees from "./Components/DashBoard/Dcomponents/AllEmployees/AllEmployees.jsx";
 import Salary from "./Components/DashBoard/Dcomponents/Salary/Salary.jsx";
 import TopAttendance from "./Components/DashBoard/Dcomponents/TopAttendance/TopAttendance.jsx";
+import EmployeeDetails from "./Components/DashBoard/Dcomponents/AllEmployees/EmployeeDetails.jsx";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <MyProfile />,
+      },
+      {
+        path: "/details/:id",
+        element: <EmployeeDetails />,
       },
       {
         path: "/myattendance",

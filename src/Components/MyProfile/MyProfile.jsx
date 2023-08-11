@@ -3,10 +3,18 @@ import { AuthContext } from "../Provider/AuthProvider";
 import EmployeeAttendanceSheet from "../EmployeeAttendanceSheet/EmployeeAttendanceSheet";
 import MyAttendance from "../MyAttendance/MyAttendance";
 import "./MyProfile.css";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 const MyProfile = () => {
+  const { id } = useParams();
   const { user } = useContext(AuthContext);
   const [userData, setUserData] = useState([]);
-
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/users/${id}`)
+      .then((response) => setUser(response.data))
+      .catch((error) => console.error("Error fetching user details:", error));
+  }, [id]);
   useEffect(() => {
     if (user && user.email) {
       // Fetch user data using the user's email
