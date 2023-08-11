@@ -1,30 +1,38 @@
 import React from "react";
-import MyAttendance from "../MyAttendance/MyAttendance";
-import { NavLink } from "react-router-dom";
-
+import AllEmployees from "./Dcomponents/AllEmployees/AllEmployees";
+import { NavLink, Outlet } from "react-router-dom";
+import "./Dashboard.css";
 const Dashboard = () => {
   return (
-    <div className="pt-12">
+    <div className="">
       <div className="drawer">
+        {/* Add the 'checked' attribute to keep the sidebar open */}
         <input
           id="my-drawer"
           type="checkbox"
           className="drawer-toggle"
-          checked={true}
+          checked
         />
-        <div className="drawer-content bg-white">
-          {/* Your content here */}
-          <MyAttendance />
+        <div className="drawer-content">
+          {/* Page content here */} <Outlet />
         </div>
-        <div className="drawer-side bg-white">
-          <label htmlFor="my-drawer" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-80 h-full bg-white text-base-content">
+        <div className="side-drawer-navigation">
+          <label htmlFor="my-drawer" className=""></label>
+          <ul className="menu p-4 w-80 h-full bg-blue-950 text-white">
             {/* Sidebar content here */}
             <li>
-              <NavLink to="/">Home</NavLink>
+              <NavLink to="/dashboard/allemployees">All Employees</NavLink>
             </li>
             <li>
-              <a>Sidebar Item 2</a>
+              <NavLink to="/dashboard/salary">Salary</NavLink>
+            </li>
+            <li>
+              <NavLink to="/dashboard/topattendance">Top Attendance</NavLink>
+            </li>
+            <div className="divider text-white"></div>
+            <hr />
+            <li>
+              <NavLink to="/">Home</NavLink>
             </li>
           </ul>
         </div>

@@ -14,6 +14,9 @@ import SignUp from "./Components/SignUp/SignUp.jsx";
 import MyProfile from "./Components/MyProfile/MyProfile.jsx";
 import MyAttendance from "./Components/MyAttendance/MyAttendance.jsx";
 import Dashboard from "./Components/DashBoard/Dashboard.jsx";
+import AllEmployees from "./Components/DashBoard/Dcomponents/AllEmployees/AllEmployees.jsx";
+import Salary from "./Components/DashBoard/Dcomponents/Salary/Salary.jsx";
+import TopAttendance from "./Components/DashBoard/Dcomponents/TopAttendance/TopAttendance.jsx";
 
 const router = createBrowserRouter([
   {
@@ -48,9 +51,23 @@ const router = createBrowserRouter([
         path: "/myattendance",
         element: <MyAttendance />,
       },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+    children: [
       {
-        path: "/dashboard",
-        element: <Dashboard />,
+        path: "/dashboard/allemployees",
+        element: <AllEmployees />,
+      },
+      {
+        path: "/dashboard/salary",
+        element: <Salary />,
+      },
+      {
+        path: "/dashboard/topattendance",
+        element: <TopAttendance />,
       },
     ],
   },

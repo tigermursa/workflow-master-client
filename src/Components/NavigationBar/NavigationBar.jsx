@@ -325,7 +325,7 @@ const NavigationBar = () => {
             Attendance
           </NavLink>
           <NavLink
-            to="/"
+            to="/dashboard"
             className="text-white hover:text-gray-400  font-semibold me-4 text-xl hidden md:block"
           >
             Notice
