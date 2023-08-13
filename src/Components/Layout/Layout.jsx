@@ -26,13 +26,17 @@ const Layout = () => {
 
   return (
     <div>
-      {noHeaderFooter || <NavigationBar />}
-      <Outlet />
-      {/* {noHeaderFooter || <Dashboard />} */}
-      {isLoading && (
-        <span className="loading loading-bars loading-lg"></span>
-      )}{" "}
-      {/* Display Loader while loading */}
+      {noHeaderFooter ? null : <NavigationBar />}
+      
+      {/* {noHeaderFooter ? null : <Dashboard />} */}
+      
+      {isLoading ? (
+        <div className="flex justify-center items-center h-screen">
+          <span className="loading loading-bars loading-lg"></span>
+        </div>
+      ) : (
+        <Outlet />
+      )}
     </div>
   );
 };

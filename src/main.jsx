@@ -18,7 +18,10 @@ import AllEmployees from "./Components/DashBoard/Dcomponents/AllEmployees/AllEmp
 import Salary from "./Components/DashBoard/Dcomponents/Salary/Salary.jsx";
 import TopAttendance from "./Components/DashBoard/Dcomponents/TopAttendance/TopAttendance.jsx";
 import EmployeeDetails from "./Components/DashBoard/Dcomponents/AllEmployees/EmployeeDetails.jsx";
-
+import UpdateEmployeInfo from "./Components/DashBoard/Dcomponents/UpdateEmployeInfo/UpdateEmployeInfo.jsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AdminRoute from "./Components/Private/AdminRoute.jsx";
+const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/",
@@ -41,17 +44,10 @@ const router = createBrowserRouter([
         element: <LogIn />,
       },
       {
-        path: "/signup",
-        element: <SignUp />,
-      },
-      {
         path: "/profile",
         element: <MyProfile />,
       },
-      {
-        path: "/details/:id",
-        element: <EmployeeDetails />,
-      },
+
       {
         path: "/myattendance",
         element: <MyAttendance />,
@@ -60,7 +56,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <AdminRoute>
+        <Dashboard />
+      </AdminRoute>
+    ),
     children: [
       {
         path: "/dashboard/allemployees",
@@ -74,6 +74,14 @@ const router = createBrowserRouter([
         path: "/dashboard/topattendance",
         element: <TopAttendance />,
       },
+      {
+        path: "/dashboard/updateinfo/:id",
+        element: <UpdateEmployeInfo />,
+      },
+      {
+        path: "/dashboard/signup",
+        element: <SignUp />,
+      },
     ],
   },
   {
@@ -85,7 +93,11 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthProvider>
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <div className="">
+          <RouterProvider router={router} />
+        </div>
+      </QueryClientProvider>
     </AuthProvider>
   </React.StrictMode>
 );

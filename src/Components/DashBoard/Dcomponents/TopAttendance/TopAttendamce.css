@@ -1,0 +1,14 @@
+.the-background {
+  background-image: linear-gradient(
+      rgba(57, 57, 57, 0.6),
+      rgba(36, 35, 35, 0.6)
+    ),
+    url("/public/dashboard-attendancebg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+}

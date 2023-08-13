@@ -288,10 +288,6 @@ const SignUp = () => {
                 />
               </button>
             </form>
-
-            <div className="signup mt-4">
-              <Link to="/">Go to Home</Link>
-            </div>
           </div>
         </div>
       )}

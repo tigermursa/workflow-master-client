@@ -1,6 +1,6 @@
 .customModalStyles {
   width: 600px;
-  height: 600px;
+  height: 640px;
   margin: auto;
   padding: 20px;
   margin-top: 50px;
@@ -45,4 +45,8 @@
 
 .closeButton {
   /* Define close button styles */
+}
+
+.employee-bg {
+  height: 100vh;
 }

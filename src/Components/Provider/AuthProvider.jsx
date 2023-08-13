@@ -10,6 +10,7 @@ import {
 } from "firebase/auth";
 import app from "../firebaseConfig/firebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
+import axios from "axios";
 export const AuthContext = createContext(null);
 
 // eslint-disable-next-line react/prop-types
@@ -65,7 +66,18 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, (myUsers) => {
       setUser(myUsers);
-      setLoading(false);
+
+      // token url and axios using
+      if (myUsers) {
+        axios
+          .post("http://localhost:3000/jwt", { email: myUsers.email })
+          .then((data) => {
+            localStorage.setItem("access-token", data.data.token);
+            setLoading(false);
+          }); 
+      } else {
+        localStorage.removeItem("access-token");
+      }
     });
     return () => {
       unSub();

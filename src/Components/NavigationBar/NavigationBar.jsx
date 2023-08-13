@@ -28,7 +28,10 @@ const NavigationBar = () => {
   console.log(user);
   const signOutHandler = () => {
     signOutUser()
-      .then((result) => {})
+      .then((result) => {
+        // Reload the page after successful sign out
+        window.location.reload();
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -325,10 +328,10 @@ const NavigationBar = () => {
             Attendance
           </NavLink>
           <NavLink
-            to="/dashboard"
+            to="/dashboard/allemployees"
             className="text-white hover:text-gray-400  font-semibold me-4 text-xl hidden md:block"
           >
-            Notice
+            Dashboard
           </NavLink>
           <NavLink
             to={"https://to-do-list-d5399.web.app/"}

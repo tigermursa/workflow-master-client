@@ -2,6 +2,7 @@ import React from "react";
 import Modal from "react-modal";
 import "./Employee.css";
 import { TfiClose } from "react-icons/tfi";
+import { NavLink } from "react-router-dom";
 
 const EmployeeDetailsModal = ({ employee, isOpen, onClose }) => {
   if (!employee) {
@@ -43,14 +44,19 @@ const EmployeeDetailsModal = ({ employee, isOpen, onClose }) => {
               Phone Number : {employee.phoneNumber}
             </p>
             <p className="text-gray-100">Address :{employee.fullAddress}</p>
+            <p className="text-gray-100">Current Salary : $ {employee.salary}</p>
           </div>
         </div>
-        <button
-          onClick={onClose}
-          className="bg-black hover:bg-white mt-2 p-1 rounded-full text-white hover:text-black text-xl"
-        >
-          <TfiClose />
-        </button>
+
+        <div>
+          <button
+            onClick={onClose}
+            className="bg-black hover:bg-white mt-2 p-1 rounded-full text-white hover:text-black text-xl"
+          >
+            <TfiClose />
+          </button>
+         
+        </div>
       </div>
     </Modal>
   );

@@ -103,13 +103,13 @@ const LogIn = () => {
               </span>
             </div>
             <div className="pass">
-              <p className="text-white">Forgot Password?</p>
+              <p className="text-white">Forgot Password? Contact with your HR</p>
             </div>
             <div className="field rounded-full ">
               <input className="rounded-full" type="submit" value="LOGIN" />
             </div>
           </form>
-          <div className="signup">
+          <div className="signup hidden">
             Don't have an account? <Link to="/signup">Sign up now</Link>
           </div>
           <div className="signup">

@@ -8,7 +8,7 @@ export default {
   // daisyUI config (optional)
   daisyui: {
     styled: true,
-    themes: ["light"],
+    themes: ["dark"],
     base: true,
     utils: true,
     logs: true,

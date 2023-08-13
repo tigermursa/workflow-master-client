@@ -1,21 +1,29 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Home.css";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
+import { FaCrown } from "react-icons/fa";
 
 const Home = () => {
   const { user } = useContext(AuthContext);
+  const [isAdminEmail, setIsAdminEmail] = useState(false);
 
   // Check if user is defined before accessing displayName
   const userName = user?.displayName || "Dear";
 
+  // List of admin emails
+  const adminEmails = ["mursalinhossain377@gmail.com", "demo@gmail.com", ""];
+
+  useEffect(() => {
+    // Check if the user's email matches any of the admin emails
+    if (user && adminEmails.includes(user.email) && !isAdminEmail) {
+      setIsAdminEmail(true);
+    }
+  }, [user, isAdminEmail]);
+
   // Get the current time in user's local time zone
   const currentTime = new Date();
   const currentHour = currentTime.getHours();
-  const ampm = currentHour >= 12 ? "PM" : "AM";
-
-  // Convert the hour to 12-hour format
-  const twelveHourFormat = currentHour % 12 || 12;
 
   // Determine the appropriate greeting based on the current time
   let greeting;
@@ -38,8 +46,12 @@ const Home = () => {
         <p className="text-stone-50 text-2xl">
           Hopefully, you are using your time well, remember, time is money!
         </p>
+        {isAdminEmail && (
+          <p className="text-stone-50 text-xl flex items-center gap-2 mt-3">
+            You are Admin <FaCrown className="text-yellow-400 text-2xl" />
+          </p>
+        )}
         <h2 className="text-xl text-white font-semibold"></h2>
-
         {!user ? (
           <NavLink
             to={"/login"}
