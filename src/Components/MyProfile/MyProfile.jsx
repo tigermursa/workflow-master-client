@@ -11,14 +11,14 @@ const MyProfile = () => {
   const [userData, setUserData] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/users/${id}`)
+      .get(`https://workflow-master-server.vercel.app/users/${id}`)
       .then((response) => setUser(response.data))
       .catch((error) => console.error("Error fetching user details:", error));
   }, [id]);
   useEffect(() => {
     if (user && user.email) {
       // Fetch user data using the user's email
-      fetch(`http://localhost:3000/employee/${user.email}`)
+      fetch(`https://workflow-master-server.vercel.app/employee/${user.email}`)
         .then((response) => response.json())
         .then((data) => setUserData(data))
         .catch((error) => console.error("Error fetching data:", error));
@@ -28,11 +28,11 @@ const MyProfile = () => {
   return (
     <div className="pt-20 h-full office-background">
       {userData.length > 0 ? (
-        <div className="flex flex-col  w-full justify-around  h-full">
+        <div className="flex flex-col  w-full justify-around  h-full ">
           {userData.map((user) => (
             <div
               key={user._id}
-              className="bg-white bg-opacity-20 rounded-lg shadow-2xl p-6  id-card"
+              className="bg-white bg-opacity-20 rounded-lg shadow-2xl p-6   id-card"
             >
               <img
                 className="mx-auto h-40 w-40 rounded-2xl"
@@ -56,7 +56,10 @@ const MyProfile = () => {
                 <p className="text-gray-100">
                   Phone Number : {user.phoneNumber}
                 </p>
-                <p className="text-gray-100">Address :{user.fullAddress}</p>
+                <p className="text-gray-100">Address : {user.fullAddress}</p>
+                <p className="text-gray-100 pb-4">
+                  My Salary : $ {user.salary}
+                </p>
               </div>
             </div>
           ))}

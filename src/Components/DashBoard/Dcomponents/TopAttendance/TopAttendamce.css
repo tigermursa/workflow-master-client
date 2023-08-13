@@ -3,7 +3,7 @@
       rgba(57, 57, 57, 0.6),
       rgba(36, 35, 35, 0.6)
     ),
-    url("/public/dashboard-attendancebg.jpg");
+    url("/dashboard-attendancebg.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

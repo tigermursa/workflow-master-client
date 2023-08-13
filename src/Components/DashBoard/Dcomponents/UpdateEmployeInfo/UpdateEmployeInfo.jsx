@@ -12,7 +12,7 @@ const UpdateEmployeInfo = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/users/${id}`)
+      .get(`https://workflow-master-server.vercel.app/users/${id}`)
       .then((response) => setUser(response.data))
       .catch((error) => console.error("Error fetching user details:", error));
   }, [id]);
@@ -34,7 +34,7 @@ const UpdateEmployeInfo = () => {
   const onSubmit = async (data) => {
     try {
       const response = await axios.patch(
-        `http://localhost:3000/users/${user.email}`,
+        `https://workflow-master-server.vercel.app/users/${user.email}`,
         data
       );
       if (response.status === 200) {
@@ -64,7 +64,7 @@ const UpdateEmployeInfo = () => {
         Edit Employee Details info
       </h2>
       <form
-        className="bg-white p-4 rounded-lg  shadow-2xl w-6/12 mb-5"
+        className="bg-white p-4 rounded-lg  shadow-2xl md:w-6/12 mb-2 md:m-0"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="mb-4">
@@ -121,9 +121,18 @@ const UpdateEmployeInfo = () => {
             {...register("fullAddress")}
           />
         </div>
-
-        <div className="flex">
-          <div className="mb-4">
+        <div className="mb-4 block md:hidden">
+          <label className="block text-gray-700 font-bold mb-2">
+            Employee ID
+          </label>
+          <input
+            className="form-input w-full border-2 p-2 rounded-md"
+            type="text"
+            {...register("eID")}
+          />
+        </div>
+        <div className="flex items-center">
+          <div className="mb-4 hidden md:block">
             <label className="block text-gray-700 font-bold mb-2">
               Employee ID
             </label>

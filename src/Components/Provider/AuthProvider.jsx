@@ -70,7 +70,7 @@ const AuthProvider = ({ children }) => {
       // token url and axios using
       if (myUsers) {
         axios
-          .post("http://localhost:3000/jwt", { email: myUsers.email })
+          .post("https://workflow-master-server.vercel.app/jwt", { email: myUsers.email })
           .then((data) => {
             localStorage.setItem("access-token", data.data.token);
             setLoading(false);

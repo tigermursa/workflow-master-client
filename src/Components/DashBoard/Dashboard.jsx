@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import AllEmployees from "./Dcomponents/AllEmployees/AllEmployees";
 import { NavLink, Outlet } from "react-router-dom";
 import "./Dashboard.css";
-import { FaUserShield, FaUserTie, FaSpinner } from "react-icons/fa";
+import { CgProfile } from "react-icons/cg";
+import { FaUserShield, FaUserTie, FaHome } from "react-icons/fa";
 import {
   MdOutlineAttachMoney,
   MdArrowCircleUp,
   MdManageAccounts,
 } from "react-icons/md";
+import NavbarForPhone from "./Dcomponents/NavbarForPhone/NavbarForPhone";
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -18,7 +20,10 @@ const Dashboard = () => {
     }, 2000); // Adjust the time as needed
   }, []);
   return (
-    <div className="">
+    <div>
+      <div className="block md:hidden">
+        <NavbarForPhone />
+      </div>
       <div className="drawer">
         {/* Add the 'checked' attribute to keep the sidebar open */}
         <input
@@ -27,19 +32,16 @@ const Dashboard = () => {
           className="drawer-toggle"
           checked
         />
+
         <div className="drawer-content">
-          {isLoading ? (
-            <div className="flex justify-center items-center mt-96 mb-96">
-              <span className="loading loading-bars loading-lg "></span>
-            </div>
-          ) : (
-            <Outlet />
-          )}
+          <Outlet />
+
           {/* Page content here */}
         </div>
         <div className="side-drawer-navigation">
           <label htmlFor="my-drawer" className=""></label>
-          <ul className="menu p-4 w-80 h-full bg-blue-950 text-white">
+
+          <ul className="menu p-4 w-80 h-full bg-blue-950 text-white hidden md:block">
             <h1 className="font-bold text-2xl flex items-center gap-2">
               <FaUserShield />
               Admin Dashboard
@@ -73,7 +75,16 @@ const Dashboard = () => {
             <div className="divider text-white"></div>
             <hr />
             <li>
-              <NavLink to="/">Home</NavLink>
+              <NavLink to="/">
+                {" "}
+                <FaHome />
+                Home
+              </NavLink>
+              <NavLink to="/profile">
+                {" "}
+                <CgProfile />
+                My Profile
+              </NavLink>
             </li>
           </ul>
         </div>

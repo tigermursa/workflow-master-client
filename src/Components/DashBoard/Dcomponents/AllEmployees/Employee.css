@@ -50,3 +50,23 @@
 .employee-bg {
   height: 100vh;
 }
+
+@media screen and (max-width: 767px) {
+  .display-none-in-phone {
+    display: none;
+  }
+  .customModalStyles {
+    width: 350px;
+    height: 550px;
+    margin: auto;
+    padding: 15px;
+    margin-top: 90px;
+  }
+  .w-of-salary {
+    width: 410px;
+    margin-left: 10px;
+  }
+  .employee-bg {
+    height: 120vh;
+  }
+}

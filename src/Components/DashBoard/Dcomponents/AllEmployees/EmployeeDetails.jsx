@@ -7,7 +7,7 @@ const EmployeeDetails = () => {
   const [user, setUser] = useState(null);
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/users/${id}`)
+      .get(`https://workflow-master-server.vercel.app/users/${id}`)
       .then((response) => setUser(response.data))
       .catch((error) => console.error("Error fetching user details:", error));
   }, [id]);

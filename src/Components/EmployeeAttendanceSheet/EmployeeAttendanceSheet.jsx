@@ -11,7 +11,7 @@ const EmployeeAttendanceSheet = () => {
 
   useEffect(() => {
     if (user && user.email) {
-      fetch(`http://localhost:3000/employee/${user.email}`)
+      fetch(`https://workflow-master-server.vercel.app/employee/${user.email}`)
         .then((response) => response.json())
         .then((data) => setUserData(data))
         .catch((error) => console.error("Error fetching data:", error));
@@ -37,7 +37,7 @@ const EmployeeAttendanceSheet = () => {
   useEffect(() => {
     if (user && user.email) {
       // Fetch user data using the user's email
-      fetch(`http://localhost:3000/attendance/${user.email}`)
+      fetch(`https://workflow-master-server.vercel.app/attendance/${user.email}`)
         .then((response) => response.json())
         .then((data) => setttendance(data))
         .catch((error) => console.error("Error fetching data:", error));
@@ -55,7 +55,7 @@ const EmployeeAttendanceSheet = () => {
       status: value,
     };
 
-    fetch("http://localhost:3000/attendance", {
+    fetch("https://workflow-master-server.vercel.app/attendance", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -111,10 +111,6 @@ const EmployeeAttendanceSheet = () => {
   const [showAttendanceDialog, setShowAttendanceDialog] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState(2); // Default: Present
 
-  const handleAttendanceButtonClick = () => {
-    setShowAttendanceDialog(true);
-  };
-
   const handleStatusSelect = (status) => {
     setSelectedStatus(status);
   };
@@ -137,10 +133,20 @@ const EmployeeAttendanceSheet = () => {
       setShowAttendanceDialog(false);
     }
   };
-
+  const handleAttendanceButtonClick = () => {
+    if (!user) {
+      Swal.fire({
+        icon: "info",
+        title: "Login Required",
+        text: "Please log in to submit your attendance.",
+      });
+    } else {
+      setShowAttendanceDialog(true);
+    }
+  };
   return (
     <div className="office-background pb-56">
-      <div className="w-full md:h-full lg:w-1/2 mx-auto shadow-2xl shadow-black p-5 pb-20 pt-6 mt-20 bg-white bg-opacity-10 ">
+      <div className=" rounded-3xl w-full md:h-full lg:w-1/2 mx-auto md:shadow-3xl shadow-white p-5 pb-20 pt-6 mt-20 bg-white bg-opacity-10 ">
         <div className="px-4 py-8 sm:px-6 md:px-8">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
             <div className="text-white">
@@ -165,7 +171,7 @@ const EmployeeAttendanceSheet = () => {
               Running Month {month}
             </p>
             <p className="text-xl sm:text-3xl font-bold text-white border-text2 mb-4">
-              Total days: {totalDays}
+              This month total working days: {totalDays - 7}
             </p>
             <div className="text-lg sm:text-xl font-extrabold flex flex-wrap justify-center gap-4 sm:gap-10 text-white border-text2">
               <p>Present: {presentDays}</p>
@@ -212,13 +218,13 @@ const EmployeeAttendanceSheet = () => {
             </div>
             <div className="flex justify-center mt-10">
               <button
-                className="btn btn-blue mr-2"
+                className="btn btn-blue mr-2 hover:bg-white hover:text-black"
                 onClick={handleAttendanceSubmit}
               >
                 Submit
               </button>
               <button
-                className="btn btn-gray"
+                className="btn btn-gray hover:bg-white hover:text-black"
                 onClick={() => setShowAttendanceDialog(false)}
               >
                 Cancel

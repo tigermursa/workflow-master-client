@@ -22,7 +22,7 @@ const Salary = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/users")
+      .get("https://workflow-master-server.vercel.app/users")
       .then((response) => {
         setEmployees(response.data);
         setIsLoading(false);
@@ -63,6 +63,7 @@ const Salary = () => {
     }
     return data;
   };
+
   const getPaidUnpaidData = () => {
     const paidCount = employees.filter(
       (employee) => employee.salaryStatus === "paid"
@@ -74,24 +75,25 @@ const Salary = () => {
       { name: "Unpaid", value: unpaidCount },
     ];
   };
+
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#AF19FF"];
   const GREEN_COLOR = "#00C49F";
   const RED_COLOR = "#FF4040"; // Red color
 
   return (
-    <div className="flex bg-gradient-to-br from-blue-900 to-gray-700 employee-bg text-white">
+    <div className="flex flex-col lg:flex-row bg-gradient-to-br from-blue-900 to-gray-700 employee-bg text-white ">
       {isLoading ? (
         <div className="flex justify-center items-center w-full h-full">
           <span className="loading loading-bars loading-lg "></span>
         </div>
       ) : (
         <>
-          <div className="w-6/12 border">
+          <div className=" w-of-salary lg:w-6/12 lg:border">
             <table className="table">
               <thead>
                 <tr className=" text-white">
-                  <th>Index</th>
-                  <th>Image</th>
+                  <th className="display-none-in-phone ">Index</th>
+                  <th className="display-none-in-phone ">Image</th>
                   <th>Name</th>
                   <th>Salary</th>
                   <th>Status</th>
@@ -103,9 +105,9 @@ const Salary = () => {
                   .sort((a, b) => parseFloat(b.salary) - parseFloat(a.salary)) // Sort by salary in descending order
                   .map((employee, index) => (
                     <tr key={employee._id}>
-                      <td>{index + 1}</td>
-                      <td>
-                        <div className="avatar">
+                      <td className="display-none-in-phone ">{index + 1}</td>
+                      <td className="display-none-in-phone ">
+                        <div className="avatar ">
                           <LazyLoad height={100} offset={100} once>
                             <div className="mask mask-squircle w-12 h-12">
                               <img src={employee.image} alt="Avatar" />
@@ -131,7 +133,7 @@ const Salary = () => {
               </tbody>
             </table>
           </div>
-          <div className="border w-1/2 p-6">
+          <div className="lg:border w-of-salary lg:w-6/12 pe-20 pt-10">
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={getSalaryRangeData()}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -141,7 +143,6 @@ const Salary = () => {
                 <Bar dataKey="value" fill="#8884d8" />
               </BarChart>
             </ResponsiveContainer>
-            {/* chart 2 */}
             <ResponsiveContainer width="100%" height={400}>
               <PieChart>
                 <Pie

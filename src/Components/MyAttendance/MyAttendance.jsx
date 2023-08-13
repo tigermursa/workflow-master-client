@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const MyAttendance = () => {
@@ -8,7 +9,9 @@ const MyAttendance = () => {
   useEffect(() => {
     if (user && user.email) {
       // Fetch user data using the user's email
-      fetch(`http://localhost:3000/attendance/${user.email}`)
+      fetch(
+        `https://workflow-master-server.vercel.app/attendance/${user.email}`
+      )
         .then((response) => response.json())
         .then((data) => setUserData(data))
         .catch((error) => console.error("Error fetching data:", error));
@@ -16,11 +19,11 @@ const MyAttendance = () => {
   }, [user]);
 
   return (
-    <div className="pt-14">
+    <div className="pt-14 md:w-4/5 mx-auto">
       <h2 className="text-2xl font-bold mb-4 text-white">Your Attendance</h2>
       <table className="w-full border-collapse border border-gray-400">
         <thead>
-          <tr className="bg-gray-200">
+          <tr className="bg-gray-200 text-white bg-opacity-50">
             <th className="p-2 border border-gray-400">Date</th>
             <th className="p-2 border border-gray-400">Time</th>
             <th className="p-2 border border-gray-400">Status</th>
@@ -28,7 +31,13 @@ const MyAttendance = () => {
         </thead>
         <tbody>
           {userData.map((attendance) => (
-            <tr key={attendance._id} className="bg-white">
+            <motion.tr
+              key={attendance._id}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="bg-white bg-opacity-60 text-white font-semibold"
+            >
               <td className="p-2 border border-gray-400">{attendance.date}</td>
               <td className="p-2 border border-gray-400">{attendance.time}</td>
               <td className="p-2 border border-gray-400">
@@ -42,7 +51,7 @@ const MyAttendance = () => {
                   <span className="text-orange-600">Vacation</span>
                 )}
               </td>
-            </tr>
+            </motion.tr>
           ))}
         </tbody>
       </table>

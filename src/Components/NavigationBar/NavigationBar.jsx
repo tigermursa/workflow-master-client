@@ -22,6 +22,7 @@ const NavigationBar = () => {
 
   const handleNavItemClick = (navItem) => {
     setActiveNavItem(navItem);
+    toggleMenu(); // Close the menu
   };
 
   const { user, signOutUser } = useContext(AuthContext);
@@ -36,6 +37,7 @@ const NavigationBar = () => {
         console.log(error);
       });
   };
+
   return (
     <div className="">
       <div>
@@ -61,8 +63,11 @@ const NavigationBar = () => {
             </button>
 
             <NavLink to="/">
-              <div className="btn btn-ghost normal-case text-white text-3xl font-thin md:hidden ">
-                <div className="flex items-center gap-2">
+              <div
+                className="btn btn-ghost normal-case text-white text-xl  md:hidden"
+                style={{ whiteSpace: "nowrap" }}
+              >
+                <div className="flex items-center gap-2 justify-center">
                   <BsFillBriefcaseFill /> WorkFlow Master
                 </div>
               </div>
@@ -119,89 +124,68 @@ const NavigationBar = () => {
                   </label>
                 </div>
               </div>
-              <div
-                href="#home"
+              <Link
+                to="/"
                 className={`block mt-4 ${
                   activeNavItem === "home"
-                    ? "text-black font-semibold"
+                    ? "text-gray-500 font-semibold"
                     : "text-white font-semibold"
                 } hover:text-gray-300`}
                 onClick={() => handleNavItemClick("home")}
               >
                 Home
-              </div>
-              <div
-                href="#about"
+              </Link>
+              <Link
+                to="/attendance"
+                className={`block mt-4 ${
+                  activeNavItem === "attendance"
+                    ? "text-gray-700 font-semibold"
+                    : "text-white font-semibold"
+                } hover:text-gray-300`}
+                onClick={() => handleNavItemClick("attendance")}
+              >
+                Attendance
+              </Link>
+              <Link
+                to="/dashboard/allemployees"
+                className={`block mt-4 ${
+                  activeNavItem === "dashboard"
+                    ? "text-gray-700 font-semibold"
+                    : "text-white font-semibold"
+                } hover:text-gray-300`}
+                onClick={() => handleNavItemClick("dashboard")}
+              >
+                Dashboard
+              </Link>
+              <Link
+                to="/dashboard/allemployees"
+                className={`block mt-4 ${
+                  activeNavItem === "todo"
+                    ? "text-gray-700 font-semibold"
+                    : "text-white font-semibold"
+                } hover:text-gray-300`}
+                onClick={() => handleNavItemClick("todo")}
+              >
+                TO Do
+              </Link>
+              <Link
+                to="/about"
                 className={`block mt-4 ${
                   activeNavItem === "about"
-                    ? "text-black font-semibold"
-                    : "text-white  font-semibold"
+                    ? "text-gray-700 font-semibold"
+                    : "text-white font-semibold"
                 } hover:text-gray-300`}
                 onClick={() => handleNavItemClick("about")}
               >
-                About Us
-              </div>
-              <div
-                href="#services"
-                className={`block mt-4 ${
-                  activeNavItem === "services"
-                    ? "text-gray-700"
-                    : "text-white  font-semibold"
-                } hover:text-gray-300`}
-                onClick={() => handleNavItemClick("services")}
-              >
-                Services
-              </div>
-              <div
-                href="#clients"
-                className={`block mt-4 ${
-                  activeNavItem === "clients"
-                    ? "text-gray-700"
-                    : "text-white  font-semibold"
-                } hover:text-gray-300`}
-                onClick={() => handleNavItemClick("clients")}
-              >
-                Clients
-              </div>
-              <div
-                href="#careers"
-                className={`block mt-4 ${
-                  activeNavItem === "careers"
-                    ? "text-gray-700"
-                    : "text-white  font-semibold"
-                } hover:text-gray-300`}
-                onClick={() => handleNavItemClick("careers")}
-              >
-                Careers
-              </div>
-              <div
-                href="#blogs"
-                className={`block mt-4 ${
-                  activeNavItem === "blogs"
-                    ? "text-gray-700"
-                    : "text-white  font-semibold"
-                } hover:text-gray-300`}
-                onClick={() => handleNavItemClick("blogs")}
-              >
-                Blogs
-              </div>
-              <div
-                href="#contact"
-                className={`block mt-4 ${
-                  activeNavItem === "contact"
-                    ? "text-gray-700"
-                    : "text-white  font-semibold"
-                } hover:text-gray-300`}
-                onClick={() => handleNavItemClick("contact")}
-              >
-                Contact Us
-              </div>
+                About
+              </Link>
+
               <div
                 href="#logout"
                 className={`block mt-4 ${
-                  activeNavItem === "contact"
-                    ? "text-gray-700"
-                    : "text-black font-semibold"
+                  activeNavItem === "home"
+                    ? " text-gray-700 font-semibold"
+                    : " text-white font-semibold"
                 } hover:text-gray-300`}
                 onClick={() => handleNavItemClick("logout")}
               >
@@ -214,9 +198,9 @@ const NavigationBar = () => {
               <div
                 href="#logout"
                 className={`block mt-4 ${
-                  activeNavItem === "contact"
-                    ? "text-gray-700"
-                    : "text-black font-semibold"
+                  activeNavItem === "home"
+                    ? " text-gray-700 font-semibold"
+                    : " text-white font-semibold"
                 } hover:text-gray-300`}
                 onClick={() => handleNavItemClick("logout")}
               >
@@ -333,12 +317,7 @@ const NavigationBar = () => {
           >
             Dashboard
           </NavLink>
-          <NavLink
-            to={"https://to-do-list-d5399.web.app/"}
-            className="text-white hover:text-gray-400  font-semibold me-4 text-xl hidden md:block"
-          >
-            To Do
-          </NavLink>
+
           <NavLink
             to="/about"
             className="text-white hover:text-gray-400  font-semibold me-4 text-xl hidden md:block"
@@ -348,12 +327,25 @@ const NavigationBar = () => {
           {!user ? (
             <NavLink
               to="/login"
-              className="text-white font-semibold me-4 text-xl hidden md:block "
+              className="text-white  hover:text-gray-400 font-semibold me-4 text-xl hidden md:block "
             >
               Log in
             </NavLink>
           ) : (
-            ""
+            <div className="flex items-center">
+              <NavLink
+                className="text-white hover:text-gray-400  font-semibold me-4 text-xl hidden md:block "
+                to="/profile"
+              >
+                Profile
+              </NavLink>{" "}
+              <NavLink
+                className="text-white hover:text-gray-900    hidden md:block btn btn-outline btn-sm pt-2  "
+                onClick={signOutHandler}
+              >
+                Logout
+              </NavLink>{" "}
+            </div>
           )}
         </div>
         <div className="flex-none me-10">
@@ -385,18 +377,6 @@ const NavigationBar = () => {
                 )}
               </div>
             </label>
-            {user ? (
-              <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                <li className="bg-white">
-                  <NavLink to="/profile">Profile</NavLink>
-                </li>
-                <li className="bg-white">
-                  <NavLink onClick={signOutHandler}>Logout</NavLink>
-                </li>
-              </ul>
-            ) : (
-              " "
-            )}
           </div>
         </div>
       </div>

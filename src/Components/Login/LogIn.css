@@ -10,7 +10,7 @@
   position: relative;
   height: 100vh;
   background: linear-gradient(rgba(37, 37, 37, 0.7), rgba(16, 15, 15, 0.7)),
-    url("/public/login.jpg");
+    url("/login.jpg");
   background-size: cover;
   background-position: center;
 }

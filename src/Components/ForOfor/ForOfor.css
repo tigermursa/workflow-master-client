@@ -3,7 +3,7 @@
       rgba(12, 15, 45, 0.6),
       rgba(49, 72, 157, 0.6)
     ),
-    url("/public/officebg.jpg");
+    url("/officebg.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

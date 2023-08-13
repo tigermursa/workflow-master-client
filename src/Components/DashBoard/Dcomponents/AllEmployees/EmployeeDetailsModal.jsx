@@ -19,43 +19,38 @@ const EmployeeDetailsModal = ({ employee, isOpen, onClose }) => {
       <div>
         <div
           key={employee._id}
-          className="border rounded-lg  p-6 flex flex-col justify-center items-center  "
+          className="border rounded-lg p-4 sm:p-6 flex flex-col justify-center items-center"
         >
           <img
-            className="mx-auto h-60 w-60 rounded-2xl"
+            className="mx-auto h-44 sm:h-60 w-44 sm:w-60 rounded-full"
             src={employee.image}
             alt="employee photo"
           />
-          <p className="text-gray-100 text-xl font-semibold">
-            {" "}
-            Employee ID : {employee.eID}
+          <p className="text-gray-100 text-lg sm:text-xl font-semibold mt-2">
+            Employee ID: {employee.eID}
           </p>
-          <p className="text-gray-100 text-3xl mt-3 font-semibold">
+          <p className="text-gray-100 text-xl sm:text-3xl mt-1 font-semibold">
             {employee.position}
           </p>
-          <div className="mt-4 text-start text-2xl">
-            <p className=" font-semibold text-gray-100">
-              Name : {employee.name}
-            </p>
-
+          <div className="mt-3 text-start text-lg sm:text-2xl">
+            <p className="font-semibold text-gray-100">Name: {employee.name}</p>
             <p className="text-gray-100">Email: {employee.email}</p>
-            <p className="text-gray-100">Sex : {employee.gender}</p>
+            <p className="text-gray-100">Sex: {employee.gender}</p>
+            <p className="text-gray-100">Phone Number: {employee.phoneNumber}</p>
+            <p className="text-gray-100">Address: {employee.fullAddress}</p>
             <p className="text-gray-100">
-              Phone Number : {employee.phoneNumber}
+              Current Salary: $ {employee.salary}
             </p>
-            <p className="text-gray-100">Address :{employee.fullAddress}</p>
-            <p className="text-gray-100">Current Salary : $ {employee.salary}</p>
           </div>
         </div>
 
-        <div>
+        <div className="text-center mt-4">
           <button
             onClick={onClose}
             className="bg-black hover:bg-white mt-2 p-1 rounded-full text-white hover:text-black text-xl"
           >
             <TfiClose />
           </button>
-         
         </div>
       </div>
     </Modal>

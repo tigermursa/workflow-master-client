@@ -3,29 +3,29 @@ import "./Home.css";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 import { FaCrown } from "react-icons/fa";
+import Modal from "react-modal";
+import { motion } from "framer-motion"; // Import motion from framer-motion
+
+Modal.setAppElement("#root");
 
 const Home = () => {
   const { user } = useContext(AuthContext);
   const [isAdminEmail, setIsAdminEmail] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  // Check if user is defined before accessing displayName
   const userName = user?.displayName || "Dear";
 
-  // List of admin emails
   const adminEmails = ["mursalinhossain377@gmail.com", "demo@gmail.com", ""];
 
   useEffect(() => {
-    // Check if the user's email matches any of the admin emails
     if (user && adminEmails.includes(user.email) && !isAdminEmail) {
       setIsAdminEmail(true);
     }
   }, [user, isAdminEmail]);
 
-  // Get the current time in user's local time zone
   const currentTime = new Date();
   const currentHour = currentTime.getHours();
 
-  // Determine the appropriate greeting based on the current time
   let greeting;
   if (currentHour >= 6 && currentHour < 12) {
     greeting = "Good Morning";
@@ -39,29 +39,106 @@ const Home = () => {
 
   return (
     <div className="mx-auto p-4 home-background">
-      <div className="flex flex-col justify-start items-start">
-        <h1 className="md:text-6xl text-3xl text-white font-bold mb-4">
+      <div className="flex flex-col justify-center items-center text-center">
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="md:text-5xl text-2xl text-white font-bold mb-2"
+        >
           {greeting}, {userName}
-        </h1>
-        <p className="text-stone-50 text-2xl">
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-stone-50 text-lg"
+        >
           Hopefully, you are using your time well, remember, time is money!
-        </p>
+        </motion.p>
         {isAdminEmail && (
-          <p className="text-stone-50 text-xl flex items-center gap-2 mt-3">
-            You are Admin <FaCrown className="text-yellow-400 text-2xl" />
-          </p>
+          <motion.p
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="text-stone-50 text-lg flex items-center gap-2 mt-2"
+          >
+            You are Admin <FaCrown className="text-yellow-400 text-xl" />
+          </motion.p>
         )}
-        <h2 className="text-xl text-white font-semibold"></h2>
+        <h2 className="text-lg text-white font-semibold mt-2"></h2>
         {!user ? (
           <NavLink
             to={"/login"}
-            className="px-6 py-3 btn btn-outline text-white rounded-md shadow-lg mt-5"
+            className="px-4 py-2 btn btn-outline text-white rounded-md shadow-lg mt-4"
           >
             Login
           </NavLink>
         ) : (
           " "
         )}
+
+        {/* Info button */}
+        <motion.button
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.6 }}
+          className="absolute left-0 bottom-0 p-2 m-4 text-white bg-blue-500 rounded-md"
+          onClick={() => setModalIsOpen(true)}
+        >
+          Info
+        </motion.button>
+
+        {/* Modal */}
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={() => setModalIsOpen(false)}
+          contentLabel="Info Modal"
+          className="modal-content"
+          style={{
+            overlay: {
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            },
+            content: {
+              maxWidth: "400px",
+              width: "90%",
+              padding: "20px",
+              textAlign: "center",
+            },
+          }}
+        >
+          <div className=" border bg-black bg-opacity-90 rounded-3xl  ">
+            <p className="text-lg text-white p-6  text-start">
+              <span className="font-bold">
+                {" "}
+                Welcome to the Workflow Master!
+              </span>{" "}
+              <br />
+              <br />
+              If you'd like to explore this website as an employee, here's a
+              demo{" "}
+              <span className="font-bold">
+                <br /> email: em@gmail.com <br /> password: Aa@123 <br />
+                <br />
+              </span>{" "}
+              If you're interested in accessing the admin panel, here are demo{" "}
+              <span className="font-bold text">
+                {" "}
+                <br /> email: demo@gmail.com <br /> password: Aa@123
+              </span>
+              <br />
+              <br /> Thank you have a nice day.
+            </p>
+            {/* Add the demo login information here */}
+          </div>
+          <button
+            className="mt-4 px-4 py-2 btn btn-outline text-black rounded-md shadow-md"
+            onClick={() => setModalIsOpen(false)}
+          >
+            Close
+          </button>
+        </Modal>
       </div>
     </div>
   );

@@ -91,7 +91,7 @@ const SignUp = () => {
         eID: employeeID,
         role: "null",
       };
-      fetch(`http://localhost:3000/users`, {
+      fetch(`https://workflow-master-server.vercel.app/users`, {
         method: "POSt",
         headers: {
           "content-type": "application/json",
