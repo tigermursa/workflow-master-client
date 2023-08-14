@@ -21,8 +21,10 @@ const NavigationBar = () => {
   const [activeNavItem, setActiveNavItem] = useState("home");
 
   const handleNavItemClick = (navItem) => {
-    setActiveNavItem(navItem);
-    toggleMenu(); // Close the menu
+    if (isMenuOpen) {
+      setActiveNavItem(navItem);
+      toggleMenu(); // Close the menu
+    }
   };
 
   const { user, signOutUser } = useContext(AuthContext);
@@ -72,29 +74,14 @@ const NavigationBar = () => {
                 </div>
               </div>
             </NavLink>
-
-            <div className="dropdown dropdown-end md:hidden">
-              <div className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow flex justify-center items-center">
-                <div className="card-body">
-                  <span className="text-green-600 font-bold text-xl"></span>
-                  <div className="card-actions">
-                    <NavLink to="/cart">
-                      <button className="btn btn-primary btn-block ">
-                        View cart
-                      </button>
-                    </NavLink>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Mobile Navigation Drawer code */}
           <animated.div
-            className="md:hidden absolute top-0 left-0 h-screen w-3/4 background py-4 px-8"
-            style={{ ...menuAnimation, zIndex: 2 }} // Add zIndex: 2 to ensure the drawer is below the slider
+            className="md:hidden absolute top-0 left-0 h-screen w-3/4 background py-4 px-8 "
+            style={{ ...menuAnimation, zIndex: 3 }}
           >
-            <div className="flex justify-end  mb-4">
+            <div className="flex justify-end mb-4">
               <button
                 type="button"
                 className="text-white hover:text-gray-300 focus:outline-none focus:text-gray-300"
@@ -103,119 +90,121 @@ const NavigationBar = () => {
                 <FaRegWindowClose className="text-3xl text-white " />
               </button>
             </div>
-            <div className="flex flex-col justify-start items-start">
-              <div>
-                <div className="dropdown dropdown-end ">
-                  <label
-                    tabIndex={0}
-                    className="btn btn-ghost btn-circle avatar"
-                  >
-                    <div className="w-10 rounded-full flex justify-center items-center">
-                      {user ? (
-                        <img
-                          title={user.displayName}
-                          src={user.photoURL}
-                          alt="Avatar"
-                        />
-                      ) : (
-                        <FaUserCircle className="text-4xl" />
-                      )}
-                    </div>
-                  </label>
+            {isMenuOpen && (
+              <div className="flex flex-col justify-start items-start">
+                <div>
+                  <div className="dropdown dropdown-end ">
+                    <label
+                      tabIndex={0}
+                      className="btn btn-ghost btn-circle avatar"
+                    >
+                      <div className="w-10 rounded-full flex justify-center items-center">
+                        {user ? (
+                          <img
+                            title={user.displayName}
+                            src={user.photoURL}
+                            alt="Avatar"
+                          />
+                        ) : (
+                          <FaUserCircle className="text-4xl" />
+                        )}
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                <Link
+                  to="/"
+                  className={`block mt-4 ${
+                    activeNavItem === "home"
+                      ? "text-gray-500 font-semibold"
+                      : "text-white font-semibold"
+                  } hover:text-gray-300`}
+                  onClick={() => handleNavItemClick("home")}
+                >
+                  Home
+                </Link>
+                <Link
+                  to="/attendance"
+                  className={`block mt-4 ${
+                    activeNavItem === "attendance"
+                      ? "text-gray-700 font-semibold"
+                      : "text-white font-semibold"
+                  } hover:text-gray-300`}
+                  onClick={() => handleNavItemClick("attendance")}
+                >
+                  Attendance
+                </Link>
+                <Link
+                  to="/dashboard/allemployees"
+                  className={`block mt-4 ${
+                    activeNavItem === "dashboard"
+                      ? "text-gray-700 font-semibold"
+                      : "text-white font-semibold"
+                  } hover:text-gray-300`}
+                  onClick={() => handleNavItemClick("dashboard")}
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  to="/dashboard/allemployees"
+                  className={`block mt-4 ${
+                    activeNavItem === "todo"
+                      ? "text-gray-700 font-semibold"
+                      : "text-white font-semibold"
+                  } hover:text-gray-300`}
+                  onClick={() => handleNavItemClick("todo")}
+                >
+                  TO Do
+                </Link>
+                <Link
+                  to="/about"
+                  className={`block mt-4 ${
+                    activeNavItem === "about"
+                      ? "text-gray-700 font-semibold"
+                      : "text-white font-semibold"
+                  } hover:text-gray-300`}
+                  onClick={() => handleNavItemClick("about")}
+                >
+                  About
+                </Link>
+
+                <div
+                  href="#logout"
+                  className={`block mt-4 ${
+                    activeNavItem === "home"
+                      ? "   text-white  font-semibold"
+                      : "text-gray-700 font-semibold"
+                  } hover:text-gray-300`}
+                  onClick={() => handleNavItemClick("logout")}
+                >
+                  {user ? (
+                    <NavLink onClick={signOutHandler}>Logout</NavLink>
+                  ) : (
+                    " "
+                  )}
+                </div>
+                <div
+                  href="#logout"
+                  className={`block mt-4 ${
+                    activeNavItem === "home"
+                      ? " text-gray-700 font-semibold"
+                      : " text-white font-semibold"
+                  } hover:text-gray-300`}
+                  onClick={() => handleNavItemClick("logout")}
+                >
+                  {!user ? (
+                    <NavLink
+                      to="/login"
+                      className="text-white font-semibold me-4 text-xl "
+                    >
+                      Log in
+                    </NavLink>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
-              <Link
-                to="/"
-                className={`block mt-4 ${
-                  activeNavItem === "home"
-                    ? "text-gray-500 font-semibold"
-                    : "text-white font-semibold"
-                } hover:text-gray-300`}
-                onClick={() => handleNavItemClick("home")}
-              >
-                Home
-              </Link>
-              <Link
-                to="/attendance"
-                className={`block mt-4 ${
-                  activeNavItem === "attendance"
-                    ? "text-gray-700 font-semibold"
-                    : "text-white font-semibold"
-                } hover:text-gray-300`}
-                onClick={() => handleNavItemClick("attendance")}
-              >
-                Attendance
-              </Link>
-              <Link
-                to="/dashboard/allemployees"
-                className={`block mt-4 ${
-                  activeNavItem === "dashboard"
-                    ? "text-gray-700 font-semibold"
-                    : "text-white font-semibold"
-                } hover:text-gray-300`}
-                onClick={() => handleNavItemClick("dashboard")}
-              >
-                Dashboard
-              </Link>
-              <Link
-                to="/dashboard/allemployees"
-                className={`block mt-4 ${
-                  activeNavItem === "todo"
-                    ? "text-gray-700 font-semibold"
-                    : "text-white font-semibold"
-                } hover:text-gray-300`}
-                onClick={() => handleNavItemClick("todo")}
-              >
-                TO Do
-              </Link>
-              <Link
-                to="/about"
-                className={`block mt-4 ${
-                  activeNavItem === "about"
-                    ? "text-gray-700 font-semibold"
-                    : "text-white font-semibold"
-                } hover:text-gray-300`}
-                onClick={() => handleNavItemClick("about")}
-              >
-                About
-              </Link>
-
-              <div
-                href="#logout"
-                className={`block mt-4 ${
-                  activeNavItem === "home"
-                    ? " text-gray-700 font-semibold"
-                    : " text-white font-semibold"
-                } hover:text-gray-300`}
-                onClick={() => handleNavItemClick("logout")}
-              >
-                {user ? (
-                  <NavLink onClick={signOutHandler}>Logout</NavLink>
-                ) : (
-                  " "
-                )}
-              </div>
-              <div
-                href="#logout"
-                className={`block mt-4 ${
-                  activeNavItem === "home"
-                    ? " text-gray-700 font-semibold"
-                    : " text-white font-semibold"
-                } hover:text-gray-300`}
-                onClick={() => handleNavItemClick("logout")}
-              >
-                {!user ? (
-                  <NavLink
-                    to="/login"
-                    className="text-white font-semibold me-4 text-xl "
-                  >
-                    Log in
-                  </NavLink>
-                ) : (
-                  ""
-                )}
-              </div>
-            </div>
+            )}
           </animated.div>
 
           {/* Desktop Navigation Items */}

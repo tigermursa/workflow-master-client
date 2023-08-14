@@ -19,7 +19,7 @@ const About = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center about-background">
-      <div className="p-8 rounded-lg text-white text-start mt-12 ">
+      <div className="p-8 rounded-lg text-white text-start mt-20 ">
         <h1 className="text-4xl font-bold mb-6">About Work Flow Master</h1>
         <p className="text-2xl mb-4 font-bold">
           The main target features are to manage employee attendance, salary,

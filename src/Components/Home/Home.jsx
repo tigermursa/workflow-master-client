@@ -82,7 +82,16 @@ const Home = () => {
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.6 }}
-          className="absolute left-0 bottom-0 p-2 m-4 text-white bg-blue-500 rounded-md"
+          className="absolute left-0 bottom-0 p-2 m-4 text-white bg-blue-500 rounded-md hidden md:block"
+          onClick={() => setModalIsOpen(true)}
+        >
+          Info
+        </motion.button>
+        <motion.button
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.6 }}
+          className="absolute right-0 bottom-0 p-2 m-4 text-white bg-blue-500 rounded-md block md:hidden"
           onClick={() => setModalIsOpen(true)}
         >
           Info
@@ -119,7 +128,7 @@ const Home = () => {
               If you'd like to explore this website as an employee, here's a
               demo{" "}
               <span className="font-bold">
-                <br /> email: em@gmail.com <br /> password: Aa@123 <br />
+                <br /> email: any@gmail.com <br /> password: Aa@123 <br />
                 <br />
               </span>{" "}
               If you're interested in accessing the admin panel, here are demo{" "}
