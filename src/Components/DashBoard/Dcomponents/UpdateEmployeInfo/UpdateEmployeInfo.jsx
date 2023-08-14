@@ -28,6 +28,7 @@ const UpdateEmployeInfo = () => {
       setValue("eID", user.eID);
       setValue("salary", user.salary);
       setValue("salaryStatus", user.salaryStatus);
+      setValue("joining", user.joining);
     }
   }, [user, setValue]);
 
@@ -85,31 +86,47 @@ const UpdateEmployeInfo = () => {
             {...register("position")}
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Email</label>
-          <input
-            className="form-input w-full  border-2 p-2 rounded-md"
-            type="email"
-            {...register("email")}
-          />
+        <div className="flex">
+          {" "}
+          <div className="mb-4 w-full">
+            <label className="block text-gray-700 font-bold mb-2">Email</label>
+            <input
+              className="form-input w-full  border-2 p-2 rounded-md"
+              type="email"
+              {...register("email")}
+            />
+          </div>
+          <div className="mb-4 w-full">
+            <label className="block text-gray-700 font-bold mb-2">
+              Phone Number
+            </label>
+            <input
+              className="form-input w-full  border-2 p-2 rounded-md"
+              type="tel"
+              {...register("phoneNumber")}
+            />
+          </div>
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Gender</label>
-          <input
-            className="form-input w-full  border-2 p-2 rounded-md"
-            type="text"
-            {...register("gender")}
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">
-            Phone Number
-          </label>
-          <input
-            className="form-input w-full  border-2 p-2 rounded-md"
-            type="tel"
-            {...register("phoneNumber")}
-          />
+
+        <div className="flex">
+          <div className="mb-4 w-full">
+            <label className="block text-gray-700 font-bold mb-2">Gender</label>
+            <input
+              className="form-input w-full  border-2 p-2 rounded-md"
+              type="text"
+              {...register("gender")}
+            />
+          </div>
+          <div className="mb-4 w-full">
+            <label className="block text-gray-700 font-bold mb-2">
+              Joining Date
+            </label>
+            <input
+              className="form-input w-full border-2 p-2 rounded-md"
+              type="date"
+              {...register("joining")}
+            />
+          </div>
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2">
@@ -131,18 +148,18 @@ const UpdateEmployeInfo = () => {
             {...register("eID")}
           />
         </div>
+        <div className="mb-4 hidden md:block">
+          <label className="block text-gray-700 font-bold mb-2">
+            Employee ID
+          </label>
+          <input
+            className="form-input w-full border-2 p-2 rounded-md"
+            type="text"
+            {...register("eID")}
+          />
+        </div>
         <div className="flex items-center">
-          <div className="mb-4 hidden md:block">
-            <label className="block text-gray-700 font-bold mb-2">
-              Employee ID
-            </label>
-            <input
-              className="form-input w-full border-2 p-2 rounded-md"
-              type="text"
-              {...register("eID")}
-            />
-          </div>
-          <div className="mb-4">
+          <div className="mb-4 w-full">
             <label className="block text-gray-700 font-bold mb-2">
               Salary (USD)
             </label>
@@ -152,7 +169,7 @@ const UpdateEmployeInfo = () => {
               {...register("salary")}
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-4 w-full">
             <label className="block text-gray-700 font-bold mb-2">
               Salary status
             </label>

@@ -36,11 +36,12 @@ const EmployeeDetailsModal = ({ employee, isOpen, onClose }) => {
             <p className="font-semibold text-gray-100">Name: {employee.name}</p>
             <p className="text-gray-100">Email: {employee.email}</p>
             <p className="text-gray-100">Sex: {employee.gender}</p>
-            <p className="text-gray-100">Phone Number: {employee.phoneNumber}</p>
-            <p className="text-gray-100">Address: {employee.fullAddress}</p>
             <p className="text-gray-100">
-              Current Salary: $ {employee.salary}
+              Phone Number: {employee.phoneNumber}
             </p>
+            <p className="text-gray-100">Address: {employee.fullAddress}</p>
+            <p className="text-gray-100">Joining Date: {employee.joining}</p>
+            <p className="text-gray-100">Current Salary: $ {employee.salary}</p>
           </div>
         </div>
 
