@@ -80,6 +80,7 @@ const LogIn = () => {
               <span className="fa fa-user"></span>
               <input
                 type="text"
+                defaultValue="demo@gmail.com"
                 name="email"
                 {...register("email", {
                   required: "Email or Phone is required",
@@ -93,6 +94,7 @@ const LogIn = () => {
                 type={showPassword ? "text" : "password"}
                 className="pass-key "
                 name="password"
+                defaultValue="Aa@123"
                 {...register("password", {
                   required: "Password is required",
                 })}
@@ -103,7 +105,9 @@ const LogIn = () => {
               </span>
             </div>
             <div className="pass">
-              <p className="text-white">Forgot Password? Contact with your HR</p>
+              <p className="text-white">
+                Forgot Password? Contact with your HR
+              </p>
             </div>
             <div className="field rounded-full ">
               <input className="rounded-full" type="submit" value="LOGIN" />
